@@ -12,6 +12,7 @@ def BubbleSort(li, comp=None):
             for j in range(i - 1):
                 if comp(li[j + 1], li[j]):
                     li[j], li[j + 1] = li[j + 1], li[j]
+        return li
 
 # selection sort
 # in-place sort, unstable-sort
@@ -27,6 +28,7 @@ def SelectionSort(li, comp=None):
                 if comp(li[idx], li[j]):
                     idx = j
             li[i], li[idx] = li[idx], li[i]
+        return li
 
 
 # insertion sort
@@ -44,6 +46,7 @@ def InsertionSort(li, comp=None):
                 li[j + 1] = li[j]
                 j -= 1
             li[j + 1] = cur
+        return li
 
 # shell sort
 # in-place sort, stable-sort
@@ -67,6 +70,7 @@ def ShellSort(li, comp=None):
             for i in range(gap):
                 IntervalInsertionSort(li, i, gap, comp)
             gap //= 2
+        return li
 
 # quick sort
 # out-place sort, stable-sort
@@ -123,6 +127,7 @@ def QuickSort_InPlace(li, comp=None):
                 _Qsort(li, L, pivot - 1)
                 _Qsort(li, pivot + 1, U)
         _Qsort(li, 0, len(li) - 1)
+        return li
 
 # merge sort
 # out-place sort, stable-sort
@@ -160,12 +165,7 @@ def SortTest(size=100, begin=0, end=100000):
     inplace_sort = [BubbleSort, SelectionSort, InsertionSort, ShellSort, QuickSort_InPlace]
     outplace_sort = [QuickSort, MergeSort]
 
-    results = []
-    for sort in inplace_sort:
-        case = list(data)
-        sort(case)
-        results.append(IsSorted(case, list(data)))
-    results += list(map(lambda f: IsSorted(f(list(data)), list(data)), outplace_sort))
+    results = list(map(lambda f: IsSorted(f(list(data)), list(data)), inplace_sort + outplace_sort))
     print(results)
 
 if __name__ == "__main__":
